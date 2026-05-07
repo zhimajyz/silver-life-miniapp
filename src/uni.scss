@@ -1,0 +1,24 @@
+/* 适老化字体大小（单位：rpx） */
+$font-size-base: 36rpx;      /* 正文 ≈ 20pt */
+$font-size-title: 44rpx;     /* 标题 ≈ 24pt */
+$font-size-button: 48rpx;    /* 按钮 ≈ 26pt */
+$font-size-small: 32rpx;     /* 辅助文字 ≈ 18pt */
+
+/* 高对比度配色 */
+$color-primary: #2C5F2D;     /* 深绿色主色调 */
+$color-secondary: #1A4A7A;   /* 深蓝色辅助 */
+$color-warning: #B33F00;     /* 警示橙色 */
+$color-bg: #FFFFFF;          /* 白色背景 */
+$color-bg-light: #F8F8F8;    /* 浅灰背景 */
+$color-text: #1A1A1A;        /* 深色文字 */
+$color-text-light: #555555;  /* 次要文字 */
+
+/* 按钮尺寸 */
+$button-height: 96rpx;
+$button-border-radius: 16rpx;
+
+/* 间距 */
+$spacing-sm: 16rpx;
+$spacing-md: 24rpx;
+$spacing-lg: 32rpx;
+$spacing-xl: 48rpx;

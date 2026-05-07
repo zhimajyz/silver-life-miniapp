@@ -1,0 +1,87 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "银发智慧生活"
+			}
+		},
+		{
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "时政新闻"
+			}
+		},
+		{
+			"path": "pages/news/detail",
+			"style": {
+				"navigationBarTitleText": "新闻详情"
+			}
+		},
+		{
+			"path": "pages/anti-fraud/index",
+			"style": {
+				"navigationBarTitleText": "防诈骗科普",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/anti-fraud/detail",
+			"style": {
+				"navigationBarTitleText": "科普详情"
+			}
+		},
+		{
+			"path": "pages/entertainment/index",
+			"style": {
+				"navigationBarTitleText": "文学娱乐"
+			}
+		},
+		{
+			"path": "pages/service/index",
+			"style": {
+				"navigationBarTitleText": "生活服务"
+			}
+		},
+		{
+			"path": "pages/calculator/calculator",
+			"style": {
+				"navigationBarTitleText": "计算器"
+			}
+		},
+		{
+			"path": "pages/magnifier/magnifier",
+			"style": {
+				"navigationBarTitleText": "放大镜"
+			}
+		},
+		{
+			"path": "pages/history/history",
+			"style": {
+				"navigationBarTitleText": "浏览历史"
+			}
+		},
+		{
+			"path": "pages/favorite/favorite",
+			"style": {
+				"navigationBarTitleText": "我的收藏"
+			}
+		},
+		{
+			"path": "pages/entertainment/video-player",
+			"style": { "navigationBarTitleText": "视频播放" }
+		},
+		{
+			"path": "pages/entertainment/article-detail",
+			"style": { "navigationBarTitleText": "文学解读" }
+		}
+
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "银发智慧生活",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F5F5F5"
+	},
+	"uniIdRouter": {}
+}
