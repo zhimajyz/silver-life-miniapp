@@ -1,5 +1,5 @@
 // utils/request.js
-const BASE_URL = 'http://localhost:8080/api'; // 后端接口基础地址
+const BASE_URL = 'http://8.134.179.188:8080/api'; // 后端接口基础地址
 
 const request = (options) => {
     return new Promise((resolve, reject) => {

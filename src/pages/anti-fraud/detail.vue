@@ -11,9 +11,9 @@
 				</button>
 				<view class="speed-control">
 					<text>语速：</text>
-					<text :class="{ 慢速 }" @click="setSpeed(0.9)">慢</text>
-					<text :class="{ 中速 }" @click="setSpeed(1.0)">中</text>
-					<text :class="{ 快速 }" @click="setSpeed(1.2)">快</text>
+					<text :class="{ active: speed === 0.9 }" @click="setSpeed(0.9)">慢</text>
+					<text :class="{ active: speed === 1.0 }" @click="setSpeed(1.0)">中</text>
+					<text :class="{ active: speed === 1.2 }" @click="setSpeed(1.2)">快</text>
 				</view>
 			</view>
 
@@ -51,11 +51,12 @@ const prevId = ref(null);
 const nextId = ref(null);
 const isPlaying = ref(false);
 const isPaused = ref(false);
-const speed = ref(1);
+const speed = ref(1.0);
 const isFavorited = ref(false);
 const audioContext = ref(null);
 const openId = uni.getStorageSync('openId') || 'test_user';
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://8.134.179.188:8080/api';
+const lastPlayTime = ref(0); // 记录上一次播报时间
 
 onLoad(async (options) => {
 	const id = options.id;
@@ -141,6 +142,14 @@ const toggleFavorite = async () => {
 };
 
 const togglePlay = async () => {
+    // ===== 防抖优化：3秒内不允许重复点击 =====
+    const now = Date.now();
+    if (now - lastPlayTime.value < 3000) {
+        uni.showToast({ title: '操作过快，请稍候', icon: 'none' });
+        return;
+    }
+    lastPlayTime.value = now;
+
 	if (isPlaying.value) {
 		audioContext.value?.pause();
 		isPlaying.value = false;
@@ -170,7 +179,18 @@ const togglePlay = async () => {
 
 		uni.hideLoading();
 
-		if (res.statusCode !== 200) throw new Error('语音生成失败');
+		if (res.statusCode !== 200) {
+			// ===== 尝试解析后端返回的错误信息 =====
+			let errMsg = '语音生成失败';
+			try {
+				const text = new TextDecoder('utf-8').decode(new Uint8Array(res.data));
+				const errObj = JSON.parse(text);
+				if (errObj.error) {
+					errMsg = errObj.error + (errObj.detail ? '：' + errObj.detail : '');
+				}
+			} catch {}
+			throw new Error(errMsg);
+		}
 
 		if (audioContext.value) audioContext.value.destroy();
 		const audio = uni.createInnerAudioContext();
@@ -206,7 +226,8 @@ const togglePlay = async () => {
 	} catch (e) {
 		uni.hideLoading();
 		console.error('语音播报异常', e);
-		uni.showToast({ title: '语音服务异常', icon: 'none' });
+		// ===== 友好提示：显示具体错误信息 =====
+		uni.showToast({ title: e.message || '语音服务异常', icon: 'none', duration: 2500 });
 		isPlaying.value = false;
 		isPaused.value = false;
 	}
@@ -271,11 +292,10 @@ onShareAppMessage(() => ({
 	gap: $spacing-lg;
 	font-size: $font-size-base;
 	color: $color-text;
-}
-
-.speed-control .active {
-	color: $color-primary;
-	font-weight: bold;
+	.active {
+		color: $color-primary;
+		font-weight: bold;
+	}
 }
 
 /* 收藏和分享并排 */
@@ -295,11 +315,10 @@ onShareAppMessage(() => ({
 .favorite-btn {
 	background-color: #f5f5f5 !important;
 	color: $color-text !important;
-}
-
-.favorite-btn.favorited {
-	background-color: #fff3e0 !important;
-	color: #f5a623 !important;
+	&.favorited {
+		background-color: #fff3e0 !important;
+		color: #f5a623 !important;
+	}
 }
 
 .share-btn {

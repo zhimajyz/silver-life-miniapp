@@ -63,7 +63,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 
-const BASE_URL = 'http://localhost:8080/api';
+const BASE_URL = 'http://8.134.179.188:8080/api';
 
 const categories = [
 	{ key: '', name: '全部' },
